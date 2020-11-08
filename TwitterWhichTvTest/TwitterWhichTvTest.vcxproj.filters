@@ -32,4 +32,9 @@
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitmap1.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
