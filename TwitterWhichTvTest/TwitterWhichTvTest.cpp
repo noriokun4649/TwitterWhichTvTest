@@ -9,7 +9,7 @@ class TwitterWhichTvTestPlugin : public TVTest::CTVTestPlugin
 {
 	static LRESULT CALLBACK EventCallback(UINT Event, LPARAM lParam1, LPARAM lParam2, void* pClientData);
 	static INT_PTR CALLBACK SettingsDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam, void* pClientData);
-	bool ShowDialog(HWND hwndOwner);
+	bool ShowDialog(HWND hwndOwner, int id);
 
 public :
 	bool GetPluginInfo(TVTest::PluginInfo* pInfo) override;
@@ -43,10 +43,10 @@ bool TwitterWhichTvTestPlugin::GetPluginInfo(TVTest::PluginInfo* pInfo)
 }
 
 bool TwitterWhichTvTestPlugin::Initialize() {
-	//TwitterWhichTvTestアイコン登録
+	//TwitterWhichTvTestアイコン登録する
 	m_pApp->RegisterPluginIconFromResource(g_hinstDLL, MAKEINTRESOURCE(IDB_ICON));
 
-	//コマンド
+	//コマンド登録する
 	RegisterCommand(OPEN_TWEET_WINDOW, L"OpenTweetWindow", L"ツイート画面開く", L"ツイートウィンドウを開きます。", IDB_ICON);
 	RegisterCommand(TWEET_NOW_IMAGE_ONLY, L"TweetNowImageOnly", L"今すぐツイート(画像のみ)", L"画面をキャプチャしツイートします。画像のみのツイートを行います。", IDB_ICON);
 	RegisterCommand(TWEET_NOW, L"TweetNow", L"今すぐツイート", L"画面をキャプチャしツイートします。");
@@ -70,6 +70,10 @@ bool TwitterWhichTvTestPlugin::Initialize() {
 		m_pApp->AddLog(L"パネル項目を登録できません。", TVTest::LOG_TYPE_ERROR);
 		return false;
 	}
+
+	//イベントコールバック登録する
+	m_pApp->SetEventCallback(EventCallback, this);
+
 	return true;
 }
 
@@ -120,21 +124,21 @@ void TwitterWhichTvTestPlugin::RegisterCommand(
 // プラグインのコマンドを実行する
 bool TwitterWhichTvTestPlugin::OnPluginCommand(int Command)
 {
+	auto WindowHand = CTVTestPlugin::m_pPluginParam->hwndApp;
 	switch (Command) {
 	case OPEN_TWEET_WINDOW:
-		return true;
+		return ShowDialog(WindowHand, IDD_TWEET);
 	}
-
 	return false;
 }
 
 
-bool TwitterWhichTvTestPlugin::ShowDialog(HWND hwndOwner) {
+bool TwitterWhichTvTestPlugin::ShowDialog(HWND hwndOwner, int id) {
 
 	TVTest::ShowDialogInfo Info;
 	Info.Flags = 0;
 	Info.hinst = g_hinstDLL;
-	Info.pszTemplate = MAKEINTRESOURCE(IDD_SETING);
+	Info.pszTemplate = MAKEINTRESOURCE(id);
 	Info.pMessageFunc = SettingsDlgProc;
 	Info.pClientData = this;
 	Info.hwndOwner = hwndOwner;
@@ -178,6 +182,7 @@ TVTest::CTVTestPlugin* CreatePluginClass()
 {
 	return new TwitterWhichTvTestPlugin;
 }
+
 LRESULT CALLBACK TwitterWhichTvTestPlugin::EventCallback(UINT Event, LPARAM lParam1, LPARAM lParam2, void* pClientData)
 {
 	TwitterWhichTvTestPlugin* pThis = static_cast<TwitterWhichTvTestPlugin*>(pClientData);
@@ -195,7 +200,7 @@ LRESULT CALLBACK TwitterWhichTvTestPlugin::EventCallback(UINT Event, LPARAM lPar
 		// コマンドが選択された
 		return pThis->OnPluginCommand((int)lParam1);
 	case TVTest::EVENT_PLUGINSETTINGS:
-		return pThis->ShowDialog(reinterpret_cast<HWND>(lParam1));
+		return pThis->ShowDialog(reinterpret_cast<HWND>(lParam1), IDD_SETING);
 	}
 	return 0;
 }
