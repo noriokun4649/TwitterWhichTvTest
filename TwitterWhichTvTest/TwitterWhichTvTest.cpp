@@ -48,8 +48,8 @@ bool TwitterWhichTvTestPlugin::Initialize() {
 
 	//コマンド登録する
 	RegisterCommand(OPEN_TWEET_WINDOW, L"OpenTweetWindow", L"ツイート画面開く", L"ツイートウィンドウを開きます。", IDB_ICON);
-	RegisterCommand(TWEET_NOW_IMAGE_ONLY, L"TweetNowImageOnly", L"今すぐツイート(画像のみ)", L"画面をキャプチャしツイートします。画像のみのツイートを行います。", IDB_ICON);
-	RegisterCommand(TWEET_NOW, L"TweetNow", L"今すぐツイート", L"画面をキャプチャしツイートします。");
+	RegisterCommand(TWEET_NOW_IMAGE_ONLY, L"TweetNowImageOnly", L"今すぐツイート(画像のみ)", L"画面をキャプチャしツイートします。画像のみのツイートを行います。", IDB_TWEET_IMG_ONLY);
+	RegisterCommand(TWEET_NOW, L"TweetNow", L"今すぐツイート", L"画面をキャプチャしツイートします。",IDB_TWEET_IMG_TEXT);
 
 
 	// パネル項目を登録する
