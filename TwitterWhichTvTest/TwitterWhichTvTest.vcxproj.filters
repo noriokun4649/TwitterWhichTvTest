@@ -33,7 +33,13 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bitmap1.bmp">
+    <Image Include="Logo.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="TweetImageAndText.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="TweetImageOnly.bmp">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
