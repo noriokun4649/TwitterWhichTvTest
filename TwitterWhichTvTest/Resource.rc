@@ -50,7 +50,11 @@ END
 // Bitmap
 //
 
-IDB_ICON                BITMAP                  "bitmap1.bmp"
+IDB_ICON                BITMAP                  "Logo.bmp"
+
+IDB_TWEET_IMG_TEXT      BITMAP                  "TweetImageAndText.bmp"
+
+IDB_TWEET_IMG_ONLY      BITMAP                  "TweetImageOnly.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
