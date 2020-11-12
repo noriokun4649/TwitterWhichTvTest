@@ -42,5 +42,8 @@
     <Image Include="TweetImageOnly.bmp">
       <Filter>リソース ファイル</Filter>
     </Image>
+    <Image Include="TweetShow.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -27,7 +27,8 @@ private:
 	enum {
 		OPEN_TWEET_WINDOW = 1,
 		TWEET_NOW_IMAGE_ONLY,
-		TWEET_NOW
+		TWEET_NOW,
+		TWEET_STREAM
 	};
 };
 
@@ -50,6 +51,7 @@ bool TwitterWhichTvTestPlugin::Initialize() {
 	RegisterCommand(OPEN_TWEET_WINDOW, L"OpenTweetWindow", L"ツイート画面開く", L"ツイートウィンドウを開きます。", IDB_ICON);
 	RegisterCommand(TWEET_NOW_IMAGE_ONLY, L"TweetNowImageOnly", L"今すぐツイート(画像のみ)", L"画面をキャプチャしツイートします。画像のみのツイートを行います。", IDB_TWEET_IMG_ONLY);
 	RegisterCommand(TWEET_NOW, L"TweetNow", L"今すぐツイート", L"画面をキャプチャしツイートします。",IDB_TWEET_IMG_TEXT);
+	RegisterCommand(TWEET_STREAM, L"TweetShow", L"ツイートを流す", L"検索に一致するツイートをリアルタイムで画面上に流します。",IDB_TWEET_SHOW);
 
 
 	// パネル項目を登録する
@@ -81,6 +83,7 @@ bool TwitterWhichTvTestPlugin::Finalize() {
 	return true;
 }
 
+// プラグイン設定の初期化
 bool TwitterWhichTvTestPlugin::InitSettings() {
 	::GetModuleFileName(g_hinstDLL, m_szIniFileName, MAX_PATH);
 	::PathRenameExtension(m_szIniFileName, TEXT(".ini"));
@@ -127,12 +130,12 @@ bool TwitterWhichTvTestPlugin::OnPluginCommand(int Command)
 	auto WindowHand = CTVTestPlugin::m_pPluginParam->hwndApp;
 	switch (Command) {
 	case OPEN_TWEET_WINDOW:
-		return ShowDialog(WindowHand, IDD_TWEET);
+		return ShowDialog(0, IDD_TWEET);
 	}
 	return false;
 }
 
-
+// ダイアログの表示 idにダイアログのリソースIDを
 bool TwitterWhichTvTestPlugin::ShowDialog(HWND hwndOwner, int id) {
 
 	TVTest::ShowDialogInfo Info;

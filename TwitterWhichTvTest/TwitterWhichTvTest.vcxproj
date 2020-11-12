@@ -166,6 +166,7 @@
     <Image Include="Logo.bmp" />
     <Image Include="TweetImageAndText.bmp" />
     <Image Include="TweetImageOnly.bmp" />
+    <Image Include="TweetShow.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
